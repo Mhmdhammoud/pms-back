@@ -5,7 +5,7 @@
   "main": "Server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon Server.js "
+    "start": "node Server.js "
   },
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.57",
