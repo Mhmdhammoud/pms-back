@@ -4,6 +4,7 @@ import colors from 'colors';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
+import morgan from 'morgan';
 
 dotenv.config();
 connectDB();
@@ -12,7 +13,6 @@ const app = express();
 
 app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
-  import morgan from 'morgan';
   app.use(morgan('dev'));
 }
 app.use('/api/v1', userRoutes);
