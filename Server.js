@@ -6,6 +6,8 @@ import userRoutes from './routes/employeeRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import managersRouter from './routes/managerRoutes.js';
 import morgan from 'morgan';
+import fileUpload from 'express-fileupload';
+import multer from 'multer';
 
 dotenv.config();
 connectDB();
@@ -13,6 +15,20 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
+app.use(
+  fileUpload({
+    limits: {},
+  })
+);
+app.use(multer().single(''));
+app.get('/', (req, res) => {
+  res.redirect('https://www.google.com');
+});
 if (process.env.NODE_ENV == 'development') {
   app.use(morgan('dev'));
 }
