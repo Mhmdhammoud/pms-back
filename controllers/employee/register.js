@@ -1,6 +1,5 @@
-import Admin from '../../models/adminModel.js';
+import Employee from '../../models/employee.js';
 import jwt from 'jsonwebtoken';
-
 export default async (req, res) => {
   try {
     const { email, password, fullName, phone, image } = req.body;
@@ -11,7 +10,7 @@ export default async (req, res) => {
         'expected format': 12345678,
       });
     }
-    const checked = await Admin.findOne({
+    const checked = await Employee.findOne({
       $or: [
         {
           email: `${email}`,
@@ -21,7 +20,6 @@ export default async (req, res) => {
         },
       ],
     });
-
     if (checked) {
       console.log(checked.fullName);
       return res.status(400).json({
@@ -31,23 +29,23 @@ export default async (req, res) => {
         phone,
       });
     } else {
-      const NewAdmin = await Admin.create({
+      const NewEmployee = await Employee.create({
         fullName,
         password,
         phone,
         email,
       });
-      if (NewAdmin) {
+      if (NewEmployee) {
         const payload = {
           email: email,
-          id: NewAdmin._id,
-          fullName: NewAdmin.fullName,
-          image: NewAdmin.image,
+          id: NewEmployee._id,
+          fullName: NewEmployee.fullName,
+          image: NewEmployee.image,
         };
 
         jwt.sign(
           payload,
-          process.env.ADMIN_SECRET,
+          process.env.EMPLOYEE_SECRET,
           {
             expiresIn: '1460h',
           },
@@ -58,14 +56,14 @@ export default async (req, res) => {
                 message: 'Internal Server Error',
               });
             }
-            console.log(`[i] Access Token generated for Admin : ${email}`);
+            console.log(`[i] Access Token generated for Employee : ${email}`);
             return res.status(200).json({
               message: 'User Created Successfully',
               email,
               fullName,
               phone,
-              image: NewAdmin.image,
-              id: NewAdmin._id,
+              image: NewEmployee.image,
+              id: NewEmployee._id,
               token: encoded,
             });
           }

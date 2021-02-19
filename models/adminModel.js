@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 const adminSchema = mongoose.Schema(
   {
-    full_name: {
+    fullName: {
       type: String,
       required: [true, 'Missing full name'],
     },
@@ -14,15 +14,18 @@ const adminSchema = mongoose.Schema(
     phone: {
       type: Number,
       required: [true, 'Missing Phone'],
+      unique: true,
     },
     image: {
       type: String,
       required: false,
-      defaut: 'https://muallemy-storage.s3.eu-central-1.amazonaws.com/male.jpg',
+      default:
+        'https://muallemy-storage.s3.eu-central-1.amazonaws.com/male.jpg',
     },
     email: {
       type: String,
       required: [true, 'Missing Email'],
+      unique: true,
     },
   },
   { timestamps: true }
@@ -32,7 +35,7 @@ adminSchema.methods.matchPassword = async function (enteredPassword) {
 };
 adminSchema.pre('save', async function (next) {
   // password are only hashed when they are modified or a new user is added
-  this.full_name = this.full_name
+  this.fullName = this.fullName
     .split(' ')
     .map((val) => val.charAt(0).toUpperCase() + val.slice(1))
     .join(' ');
