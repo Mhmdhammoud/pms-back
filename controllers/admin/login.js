@@ -22,6 +22,8 @@ export default async (req, res) => {
       const payload = {
         email: email,
         id: user._id,
+        fullName: user.fullName,
+        image: user.image,
       };
 
       jwt.sign(
@@ -43,7 +45,7 @@ export default async (req, res) => {
             id: user._id,
             token: encoded,
             image: user.image,
-            name: user.full_name,
+            fullName: user.fullName,
             email: email,
           });
         }

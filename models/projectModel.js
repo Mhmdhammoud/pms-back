@@ -23,6 +23,9 @@ const projectSchema = mongoose.Schema(
         },
       },
     },
+    projectManager: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     projectEmployees: [
       {
         employeeID: {
