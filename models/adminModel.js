@@ -14,6 +14,7 @@ const adminSchema = mongoose.Schema(
     phone: {
       type: Number,
       required: [true, 'Missing Phone'],
+      unique: true,
     },
     image: {
       type: String,
@@ -24,6 +25,7 @@ const adminSchema = mongoose.Schema(
     email: {
       type: String,
       required: [true, 'Missing Email'],
+      unique: true,
     },
   },
   { timestamps: true }

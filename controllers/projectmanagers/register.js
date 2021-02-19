@@ -1,4 +1,4 @@
-import Admin from '../../models/adminModel.js';
+import Manager from '../../models/manager.js';
 import jwt from 'jsonwebtoken';
 
 export default async (req, res) => {
@@ -11,7 +11,7 @@ export default async (req, res) => {
         'expected format': 12345678,
       });
     }
-    const checked = await Admin.findOne({
+    const checked = await Manager.findOne({
       $or: [
         {
           email: `${email}`,
@@ -21,7 +21,6 @@ export default async (req, res) => {
         },
       ],
     });
-
     if (checked) {
       console.log(checked.fullName);
       return res.status(400).json({
@@ -31,23 +30,23 @@ export default async (req, res) => {
         phone,
       });
     } else {
-      const NewAdmin = await Admin.create({
+      const NewManager = await Manager.create({
         fullName,
         password,
         phone,
         email,
       });
-      if (NewAdmin) {
+      if (NewManager) {
         const payload = {
           email: email,
-          id: NewAdmin._id,
-          fullName: NewAdmin.fullName,
-          image: NewAdmin.image,
+          id: NewManager._id,
+          fullName: NewManager.fullName,
+          image: NewManager.image,
         };
 
         jwt.sign(
           payload,
-          process.env.ADMIN_SECRET,
+          process.env.MANAGER_SECRET,
           {
             expiresIn: '1460h',
           },
@@ -58,14 +57,14 @@ export default async (req, res) => {
                 message: 'Internal Server Error',
               });
             }
-            console.log(`[i] Access Token generated for Admin : ${email}`);
+            console.log(`[i] Access Token generated for Manager : ${email}`);
             return res.status(200).json({
               message: 'User Created Successfully',
               email,
               fullName,
               phone,
-              image: NewAdmin.image,
-              id: NewAdmin._id,
+              image: NewManager.image,
+              id: NewManager._id,
               token: encoded,
             });
           }

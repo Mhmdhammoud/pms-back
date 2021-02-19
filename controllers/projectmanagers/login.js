@@ -1,9 +1,9 @@
-import Admin from '../../models/adminModel.js';
+import Manager from '../../models/manager.js';
 import jwt from 'jsonwebtoken';
 export default async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await Admin.findOne({ email });
+    const user = await Manager.findOne({ email });
     if (!user) {
       return res.status(404).json({
         message: 'User was not found',
@@ -27,7 +27,7 @@ export default async (req, res) => {
 
       jwt.sign(
         payload,
-        process.env.ADMIN_SECRET,
+        process.env.MANAGER_SECRET,
         {
           expiresIn: '1460h',
         },
@@ -38,7 +38,7 @@ export default async (req, res) => {
               message: 'Internal Server Error',
             });
           }
-          console.log(`[i] Access Token generated for Admin : ${email}`);
+          console.log(`[i] Access Token generated for Manager : ${email}`);
           return res.status(200).json({
             status: 'success',
             id: user._id,
