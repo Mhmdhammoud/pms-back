@@ -8,6 +8,7 @@ import managersRouter from './routes/managerRoutes.js';
 import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
 import multer from 'multer';
+import cors from 'cors';
 
 dotenv.config();
 connectDB();
@@ -25,6 +26,7 @@ app.use(
     limits: {},
   })
 );
+app.use(cors());
 app.use(multer().single(''));
 app.get('/', (req, res) => {
   res.redirect('https://www.google.com');
