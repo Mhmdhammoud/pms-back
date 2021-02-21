@@ -42,6 +42,7 @@ const managerSchema = mongoose.Schema(
 managerSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
 managerSchema.pre('save', async function (next) {
   // password are only hashed when they are modified or a new user is added
   this.fullName = this.fullName

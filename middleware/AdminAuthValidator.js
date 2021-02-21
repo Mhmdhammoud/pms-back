@@ -23,6 +23,7 @@ export default async (req, res, next) => {
       image,
       fullName,
       email,
+      type: 'Admin',
     };
     req.user = user;
     next();

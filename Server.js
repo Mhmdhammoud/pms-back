@@ -34,6 +34,10 @@ app.get('/', (req, res) => {
 if (process.env.NODE_ENV == 'development') {
   app.use(morgan('dev'));
 }
+app.use((req, res, next) => {
+  req.requestedAt = new Date().toISOString();
+  next();
+});
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/manager', managersRouter);
 app.use('/api/v1/employee', userRoutes);

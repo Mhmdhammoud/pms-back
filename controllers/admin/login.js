@@ -46,6 +46,7 @@ export default async (req, res) => {
             image: user.image,
             fullName: user.fullName,
             email: email,
+            type: 'Admin',
           });
         }
       );
