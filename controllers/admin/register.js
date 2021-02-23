@@ -1,4 +1,4 @@
-import Admin from '../../models/adminModel.js';
+import { Admin } from '../../models/index.js';
 import jwt from 'jsonwebtoken';
 
 export default async (req, res) => {

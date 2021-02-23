@@ -1,5 +1,5 @@
 import express from 'express';
-import ValidateAuth from '../middleware/UserAuthValidator.js';
+import { EmployeeAuthValidator } from '../middleware/index.js';
 import { Login, Register } from '../controllers/employee/index.js';
 const router = express.Router();
 

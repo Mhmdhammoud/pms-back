@@ -1,4 +1,4 @@
-import Employee from '../../models/employee.js';
+import { Employee } from '../../models/index.js';
 import jwt from 'jsonwebtoken';
 export default async (req, res) => {
   try {

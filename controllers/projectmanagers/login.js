@@ -1,4 +1,4 @@
-import Manager from '../../models/manager.js';
+import { Manager } from '../../models/index.js';
 import jwt from 'jsonwebtoken';
 export default async (req, res) => {
   try {

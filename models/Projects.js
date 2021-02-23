@@ -39,9 +39,13 @@ const projectSchema = mongoose.Schema(
           type: Date,
           validate: {
             validator: function () {
-              return this.ending_date >= Date.now;
+              return this.endingDate >= Date.now;
             },
           },
+        },
+        achieved: {
+          type: Boolean,
+          default: false,
         },
       },
     ],
