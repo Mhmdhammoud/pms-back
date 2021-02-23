@@ -20,7 +20,7 @@ const managerSchema = mongoose.Schema(
       type: String,
       required: false,
       default:
-        'https://muallemy-storage.s3.eu-central-1.amazonaws.com/female.jpg',
+        'https://images-ext-1.discordapp.net/external/9GOo7SsX_dDMunsgTqJqWywORR3eZK-a311JL_914tE/https/freesvg.org/img/myAvatar.png?width=559&height=559',
     },
     email: {
       type: String,

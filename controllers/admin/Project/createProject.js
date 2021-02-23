@@ -15,6 +15,7 @@ export default async (req, res) => {
       startingDate,
       projectManager,
       projectEmployees,
+      description,
     } = req.body;
     const NewProject = await Project.create({
       title,
@@ -22,6 +23,7 @@ export default async (req, res) => {
       startingDate,
       projectManager,
       projectEmployees,
+      description,
     });
     if (NewProject) {
       return res.status(200).json({

@@ -14,9 +14,17 @@ const projectSchema = mongoose.Schema(
         },
       },
     },
+    description: {
+      type: String,
+    },
     startingDate: {
       type: Date,
       required: [true, 'Missing Starting Date'],
+    },
+    image: {
+      type: String,
+      default:
+        'https://images-ext-2.discordapp.net/external/aK_uXpe4Difh3zV3MpYkzrd0om8X5mbrqEeuxhkZZwc/https/www.andreasreiterer.at/wp-content/uploads/2017/11/react-logo-825x510.jpg',
     },
     projectManager: {
       type: mongoose.Schema.Types.ObjectId,

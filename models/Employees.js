@@ -20,7 +20,7 @@ const employeeSchema = mongoose.Schema(
       type: String,
       required: false,
       default:
-        'https://muallemy-storage.s3.eu-central-1.amazonaws.com/female.jpg',
+        'https://images-ext-1.discordapp.net/external/c8kNf_KjKot7PbAXFV25Wuv2nePiRWamDejgVRLvf94/%3Fq%3Dtbn%3AANd9GcSH4dcYWVFHFsz8M3Rsjpy2Hg6gQAmgbCIwWA%26usqp%3DCAU/https/encrypted-tbn0.gstatic.com/images',
     },
     email: {
       type: String,
