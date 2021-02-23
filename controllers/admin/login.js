@@ -23,6 +23,7 @@ export default async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         image: user.image,
+        type: 'Admin',
       };
 
       jwt.sign(
@@ -46,6 +47,7 @@ export default async (req, res) => {
             image: user.image,
             fullName: user.fullName,
             email: email,
+            type: 'Admin',
           });
         }
       );

@@ -17,20 +17,16 @@ const projectSchema = mongoose.Schema(
     startingDate: {
       type: Date,
       required: [true, 'Missing Starting Date'],
-      validate: {
-        validator: function () {
-          return this.starting_date >= Date.now;
-        },
-      },
     },
     projectManager: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'Manager',
     },
     projectEmployees: [
       {
         employeeID: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Employees',
+          ref: 'Employee',
         },
       },
     ],
@@ -56,7 +52,7 @@ const projectSchema = mongoose.Schema(
         },
         employeeID: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Employees',
+          ref: 'Employee',
         },
         duration: {
           type: Number,
