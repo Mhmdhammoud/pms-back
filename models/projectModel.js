@@ -20,12 +20,13 @@ const projectSchema = mongoose.Schema(
     },
     projectManager: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'Manager',
     },
     projectEmployees: [
       {
         employeeID: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Employees',
+          ref: 'Employee',
         },
       },
     ],
@@ -51,7 +52,7 @@ const projectSchema = mongoose.Schema(
         },
         employeeID: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Employees',
+          ref: 'Employee',
         },
         duration: {
           type: Number,

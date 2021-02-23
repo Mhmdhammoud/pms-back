@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import userRoutes from './routes/employeeRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import managersRouter from './routes/managerRoutes.js';
+import generalRouter from './routes/generalRoutes.js';
 import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
 import multer from 'multer';
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/manager', managersRouter);
 app.use('/api/v1/employee', userRoutes);
+app.use('/api/v1/projects', generalRouter);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

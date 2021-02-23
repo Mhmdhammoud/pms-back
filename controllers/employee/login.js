@@ -23,6 +23,7 @@ export default async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         image: user.image,
+        type: 'Employee',
       };
 
       jwt.sign(
