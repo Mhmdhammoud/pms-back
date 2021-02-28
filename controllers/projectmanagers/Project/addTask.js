@@ -49,6 +49,7 @@ export default async (req, res) => {
       .populate('projectManager', 'fullName email image')
       .populate('projectEmployees.employeeID', 'fullName email image')
       .populate('tasks.employeeID', 'fullName image email');
+
     return res.status(200).json({
       status: 'Success',
       message: 'Project was updated successfully, Task was added',

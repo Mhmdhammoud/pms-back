@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 
 export default async (req, res, next) => {
   let token = req.headers['authorization'];
-
   if (!token) {
     return res.status(401).json({
       message: 'Not Authorized',

@@ -2,7 +2,8 @@ import { Project } from '../../../models/index.js';
 
 export default async (req, res) => {
   const { type } = req.user;
-  if (!type === 'Admin') {
+
+  if (!type === 'Manager') {
     return res.status(401).json({
       status: 'Failed',
       message: 'This route is only accepted to a certain clearance level',
@@ -13,7 +14,6 @@ export default async (req, res) => {
       title,
       duration,
       startingDate,
-      projectManager,
       projectEmployees,
       description,
     } = req.body;
@@ -21,7 +21,7 @@ export default async (req, res) => {
       title,
       duration,
       startingDate,
-      projectManager,
+      projectManager: req.user.id,
       projectEmployees,
       description,
     });
@@ -33,7 +33,6 @@ export default async (req, res) => {
         project: NewProject,
       });
     }
-    return res.status(200).json({});
   } catch (error) {
     return res.status(500).json({
       message: 'Internal Server Error',

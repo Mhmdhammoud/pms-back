@@ -16,7 +16,7 @@ export default async (req, res) => {
       });
     }
     return res.status(200).json({
-      stastus: 'Success',
+      status: 'Success',
       message: 'Project was fetched successfully',
       project: PROJECT,
       requestTime: req.requestedAt,
