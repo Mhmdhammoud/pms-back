@@ -5,12 +5,12 @@ export default async (req, res, next) => {
 		if (!id) {
 			return res.status(400).json({
 				status: 'Failure',
-				message: 'Bad request, expected project ID recieved null',
+				message: 'Bad request, expected  ID recieved null',
 			});
 		} else if (id != mongoose.Types.ObjectId(id)) {
 			return res.status(400).json({
 				status: 'Failure',
-				message: 'Bad request, wrong project id format',
+				message: 'Bad request, wrong  id format',
 			});
 		}
 

@@ -1,4 +1,4 @@
-import {Project} from '../../../models/index.js';
+import {Project, Manager} from '../../../models/index.js';
 
 export default async (req, res) => {
 	const {type} = req.user;
@@ -19,12 +19,24 @@ export default async (req, res) => {
 			description,
 		});
 		if (NewProject) {
-			return res.status(200).json({
-				status: 'Success',
-				message: 'Project was created succsessully',
-				requestTime: req.requestedAt,
-				project: NewProject,
-			});
+			const UPDATED_MANAGER = await Manager.findByIdAndUpdate(
+				req.user.id,
+				{
+					$push: {
+						projects: [{project: NewProject._id}],
+					},
+				}
+			);
+			if (UPDATED_MANAGER) {
+				return res.status(200).json({
+					status: 'Success',
+					message: 'Project was created succsessully',
+					requestTime: req.requestedAt,
+					project: NewProject,
+				});
+			} else {
+				throw new Error('Internal Server Error');
+			}
 		}
 	} catch (error) {
 		return res.status(500).json({
