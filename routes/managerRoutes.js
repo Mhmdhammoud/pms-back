@@ -6,6 +6,7 @@ import {
 	AddTask,
 	AddEmployee,
 	CreateProject,
+	GetManagerByID,
 } from '../controllers/projectmanagers/index.js';
 import {ManagerAuthValidator, ValidateID} from '../middleware/index.js';
 const router = express.Router();
@@ -18,5 +19,6 @@ router
 router.route('/addTask').put(ManagerAuthValidator, ValidateID, AddTask);
 router.route('/addEmployee').put(ManagerAuthValidator, ValidateID, AddEmployee);
 router.route('/project/create').post(ManagerAuthValidator, CreateProject);
+router.route('/getByID').get(GetManagerByID);
 
 export default router;
