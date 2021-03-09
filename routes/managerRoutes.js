@@ -19,6 +19,6 @@ router
 router.route('/addTask').put(ManagerAuthValidator, ValidateID, AddTask);
 router.route('/addEmployee').put(ManagerAuthValidator, ValidateID, AddEmployee);
 router.route('/project/create').post(ManagerAuthValidator, CreateProject);
-router.route('/getByID').get(GetManagerByID);
-
+router.route('/getByID').get(ValidateID, GetManagerByID);
+router.route('/update');
 export default router;
