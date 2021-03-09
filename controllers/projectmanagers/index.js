@@ -5,3 +5,4 @@ export {default as AddTask} from './Project/addTask.js';
 export {default as AddEmployee} from './Project/addEmployee.js';
 export {default as CreateProject} from './Project/createProject.js';
 export {default as GetManagerByID} from './getByID.js';
+export {default as getByIDandUpdate} from './getByIDandUpdate.js';

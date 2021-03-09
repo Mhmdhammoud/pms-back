@@ -4,6 +4,15 @@ import jwt from 'jsonwebtoken';
 export default async (req, res) => {
 	try {
 		const USER_ID = req.user.id;
+		const EMPLOYEE = await Employee.findById(USER_ID);
+		if (!EMPLOYEE) {
+			return res.status(404).json({
+				status: 'Failure',
+				message: 'Employee was not found',
+				employee: null,
+				requestTime: new Date().toISOString(),
+			});
+		}
 		const {
 			fullName: USER_NAME,
 			password: USER_PASSWORD,
@@ -25,8 +34,7 @@ export default async (req, res) => {
 					phone: USER_PHONE,
 					email: USER_EMAIL,
 				},
-			});
-			console.log(UPDATED_EMPLOYEE);
+			}).select('-__v');
 			if (
 				UPDATED_EMPLOYEE.fullName == USER_NAME &&
 				UPDATED_EMPLOYEE.phone == USER_PHONE &&
@@ -80,7 +88,7 @@ export default async (req, res) => {
 					email: USER_EMAIL,
 					password: HASHED_UPDATED_PASSWORD,
 				},
-			});
+			}).select('-__v');
 			if (
 				UPDATED_EMPLOYEE.fullName === USER_NAME &&
 				UPDATED_EMPLOYEE.phone === USER_PHONE &&
