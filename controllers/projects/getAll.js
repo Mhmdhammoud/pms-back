@@ -1,4 +1,4 @@
-import Project from '../../models/projectModel.js';
+import { Project } from '../../models/index.js';
 
 export default async (req, res) => {
   try {
