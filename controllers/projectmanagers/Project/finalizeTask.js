@@ -37,6 +37,7 @@ export default async (req, res) => {
 			deadline: TASK.deadline,
 			startingDate: TASK.startingDate,
 			files: TASK.files,
+			description: TASK.description,
 			status: 'Done',
 			comments: TASK.comments,
 		};

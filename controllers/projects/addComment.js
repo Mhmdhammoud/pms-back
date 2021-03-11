@@ -80,6 +80,7 @@ export default async (req, res) => {
 					startingDate: TASK.startingDate,
 					files: TASK.files,
 					status: TASK.status,
+					description: TASK.description,
 					comments: [
 						...TASK.comments,
 						{

@@ -8,6 +8,7 @@ export default async (req, res) => {
 			duration,
 			deadline,
 			startingDate,
+			description,
 		} = req.body;
 		if (
 			!taskTitle ||
@@ -19,7 +20,9 @@ export default async (req, res) => {
 			!startingDate ||
 			duration === '' ||
 			deadline === '' ||
-			startingDate === ''
+			startingDate === '' ||
+			!description ||
+			description === ''
 		) {
 			return res.status(400).json({
 				status: 'Failure',
@@ -41,6 +44,7 @@ export default async (req, res) => {
 					duration,
 					deadline,
 					startingDate,
+					description,
 				},
 			},
 		});
@@ -70,6 +74,7 @@ export default async (req, res) => {
 					duration,
 					deadline,
 					startingDate,
+					description,
 				},
 				project: UpdatedProject,
 			});
