@@ -60,7 +60,7 @@ const projectSchema = mongoose.Schema(
 		],
 		tasks: [
 			{
-				taskTitle: {
+				title: {
 					type: String,
 				},
 				description: {

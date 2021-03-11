@@ -1,7 +1,9 @@
 ## Project Management System
+
 ### Collections
 
 #### Project
+
 <hr>
 <ol>
 	<li>duration</li>
@@ -62,8 +64,6 @@
 	</li>
 </ol>
 
-
-
 ### manager
 
 |
@@ -92,7 +92,7 @@
 |**tasks
 | |
 | |**taskid
-| |**tasktitle
+| |**title
 |
 |**projects
 |

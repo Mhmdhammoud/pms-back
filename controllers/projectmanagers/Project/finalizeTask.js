@@ -31,7 +31,7 @@ export default async (req, res) => {
 		}
 		let UPDATED_TASK = {
 			...TASK,
-			taskTitle: TASK.taskTitle,
+			title: TASK.title,
 			employeeID: TASK.employeeID,
 			duration: TASK.duration,
 			deadline: TASK.deadline,
