@@ -13,7 +13,6 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		console.log('here?');
 		const {
 			fullName: USER_NAME,
 			password: USER_PASSWORD,

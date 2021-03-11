@@ -63,6 +63,10 @@ const projectSchema = mongoose.Schema(
 				taskTitle: {
 					type: String,
 				},
+				status: {
+					type: String,
+					default: 'In Progress',
+				},
 				employeeID: {
 					type: mongoose.Schema.Types.ObjectId,
 					ref: 'Employee',
