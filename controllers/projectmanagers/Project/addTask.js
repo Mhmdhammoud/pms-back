@@ -3,23 +3,26 @@ import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
 		const {
-			taskTitle,
+			title,
 			employeeID,
 			duration,
 			deadline,
 			startingDate,
+			description,
 		} = req.body;
 		if (
-			!taskTitle ||
+			!title ||
 			!employeeID ||
-			taskTitle === '' ||
+			title === '' ||
 			employeeID === '' ||
 			!duration ||
 			!deadline ||
 			!startingDate ||
 			duration === '' ||
 			deadline === '' ||
-			startingDate === ''
+			startingDate === '' ||
+			!description ||
+			description === ''
 		) {
 			return res.status(400).json({
 				status: 'Failure',
@@ -36,11 +39,12 @@ export default async (req, res) => {
 		await Project.findByIdAndUpdate(req.id, {
 			$push: {
 				tasks: {
-					taskTitle,
+					title,
 					employeeID,
 					duration,
 					deadline,
 					startingDate,
+					description,
 				},
 			},
 		});
@@ -53,7 +57,7 @@ export default async (req, res) => {
 			$push: {
 				tasks: [
 					{
-						title: taskTitle,
+						title: title,
 						projectTitle: UpdatedProject.title,
 						deadline: deadline,
 					},
@@ -65,11 +69,12 @@ export default async (req, res) => {
 				status: 'Success',
 				message: 'Project was updated successfully, Task was added',
 				task: {
-					taskTitle,
+					title,
 					employeeID,
 					duration,
 					deadline,
 					startingDate,
+					description,
 				},
 				project: UpdatedProject,
 			});

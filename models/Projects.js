@@ -60,8 +60,15 @@ const projectSchema = mongoose.Schema(
 		],
 		tasks: [
 			{
-				taskTitle: {
+				title: {
 					type: String,
+				},
+				description: {
+					type: String,
+				},
+				status: {
+					type: String,
+					default: 'In Progress',
 				},
 				employeeID: {
 					type: mongoose.Schema.Types.ObjectId,
