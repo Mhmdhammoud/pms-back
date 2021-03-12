@@ -2,7 +2,7 @@ import {
 	getAllEmployees,
 	getByID,
 } from '../controllers/projectmanagers/employees/index.js';
-import {getTasks} from '../controllers/employee/index.js';
+import {getTasks, GetProjectBoard} from '../controllers/employee/index.js';
 import {addComment} from '../controllers/projects/index.js';
 import express from 'express';
 import {GetTaskByID} from '../controllers/projectmanagers/index.js';
@@ -13,4 +13,5 @@ router.route('/employees/getByID').get(ValidateID, getByID);
 router.route('/employees/getTasks').get(getTasks);
 router.route('/projects/addComment').put(addComment);
 router.route('/project/task/getByID').get(GetTaskByID);
+router.route('/project/board').get(GetProjectBoard);
 export default router;

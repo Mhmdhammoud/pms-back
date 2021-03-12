@@ -45,6 +45,7 @@ export default async (req, res) => {
 					deadline,
 					startingDate,
 					description,
+					status: 'TO-DO',
 				},
 			},
 		});

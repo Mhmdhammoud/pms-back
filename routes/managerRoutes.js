@@ -9,6 +9,8 @@ import {
 	GetManagerByID,
 	getByIDandUpdate,
 	FinalizeTask,
+	ToggleTaskStatus,
+	MyProjects,
 } from '../controllers/projectmanagers/index.js';
 import {ManagerAuthValidator, ValidateID} from '../middleware/index.js';
 const router = express.Router();
@@ -24,4 +26,6 @@ router.route('/project/create').post(ManagerAuthValidator, CreateProject);
 router.route('/getByID').get(ValidateID, GetManagerByID);
 router.route('/update').put(ManagerAuthValidator, getByIDandUpdate);
 router.route('/task/finalize').put(ManagerAuthValidator, FinalizeTask);
+router.route('/task/toggle').put(ManagerAuthValidator, ToggleTaskStatus);
+router.route('/projects/mine').get(ManagerAuthValidator, MyProjects);
 export default router;
