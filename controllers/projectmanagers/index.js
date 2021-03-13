@@ -10,3 +10,4 @@ export {default as FinalizeTask} from './Project/finalizeTask.js';
 export {default as GetTaskByID} from './Project/getTaskID.js';
 export {default as ToggleTaskStatus} from './Project/toggleTaskStatus.js';
 export {default as MyProjects} from './Project/getMyProjects.js';
+export {default as DeleteEmployee} from './employees/delete.js';
