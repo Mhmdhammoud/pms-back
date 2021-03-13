@@ -56,8 +56,8 @@ export default async (req, res) => {
 				});
 		}
 		const PROJECT = await Project.findById(PROJECT_ID);
-		const {tasks: ALL_TASKS} = PROJECT;
-		let TASK = ALL_TASKS.find((el) => el._id == TASK_ID);
+		const {tasks: ALL_OUTDATED_TASKS} = PROJECT;
+		let TASK = ALL_OUTDATED_TASKS.find((el) => el._id == TASK_ID);
 		if (!TASK) {
 			return res.status(404).json({
 				status: 'Failure',
@@ -65,7 +65,9 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		let ALL_OTHER_TASKS = ALL_TASKS.filter((el) => el._id != TASK_ID);
+		let ALL_OTHER_TASKS = ALL_OUTDATED_TASKS.filter(
+			(el) => el._id != TASK_ID
+		);
 		let UPDATED_TASK = {
 			title: TASK.title,
 			employeeID: TASK.employeeID,
@@ -89,10 +91,23 @@ export default async (req, res) => {
 				new: true,
 			}
 		);
+		const {tasks: ALL_UPDATED_PROJECTS_NEW} = UPDATED_PROJECT;
+		const TODO_TASKS = ALL_UPDATED_PROJECTS_NEW.filter(
+			(el) => el.status == 'TO-DO'
+		);
+		const INPROGRESS_TASKS = ALL_UPDATED_PROJECTS_NEW.filter(
+			(el) => el.status == 'In-Progress'
+		);
+		const DONE_TASKS = ALL_UPDATED_PROJECTS_NEW.filter(
+			(el) => el.status == 'Done'
+		);
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Task was updated successfully',
 			tasks: UPDATED_PROJECT.tasks,
+			todoTasks: TODO_TASKS,
+			inProgressTasks: INPROGRESS_TASKS,
+			doneTasks: DONE_TASKS,
 			requestTime: new Date().toISOString(),
 		});
 	} catch (error) {
