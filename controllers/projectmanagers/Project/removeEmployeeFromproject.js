@@ -55,7 +55,7 @@ export default async (req, res) => {
 		if (!UPDATED_PROJECT) {
 			throw new Error('Internal Server Error');
 		}
-		const NEW_PROJECT = await (await Project.findById(PROJECT_ID))
+		const NEW_PROJECT = await Project.findById(PROJECT_ID)
 			.select('-__v')
 			.populate(
 				'projectEmployees.employeeID',
@@ -64,7 +64,7 @@ export default async (req, res) => {
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Employee was removed from project successfully',
-			project: UPDATED_PROJECT,
+			project: NEW_PROJECT,
 			requestTime: new Date().toISOString(),
 		});
 	} catch (error) {
