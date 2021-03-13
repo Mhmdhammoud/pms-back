@@ -9,6 +9,10 @@ import {
 	GetManagerByID,
 	getByIDandUpdate,
 	FinalizeTask,
+	ToggleTaskStatus,
+	MyProjects,
+	DeleteEmployee,
+	RemoveEmployeeFromProject,
 } from '../controllers/projectmanagers/index.js';
 import {ManagerAuthValidator, ValidateID} from '../middleware/index.js';
 const router = express.Router();
@@ -24,4 +28,10 @@ router.route('/project/create').post(ManagerAuthValidator, CreateProject);
 router.route('/getByID').get(ValidateID, GetManagerByID);
 router.route('/update').put(ManagerAuthValidator, getByIDandUpdate);
 router.route('/task/finalize').put(ManagerAuthValidator, FinalizeTask);
+router.route('/task/toggle').put(ManagerAuthValidator, ToggleTaskStatus);
+router.route('/projects/mine').get(ManagerAuthValidator, MyProjects);
+router.route('/employee/delete').delete(ManagerAuthValidator, DeleteEmployee);
+router
+	.route('/project/employee/remove')
+	.delete(ManagerAuthValidator, RemoveEmployeeFromProject);
 export default router;

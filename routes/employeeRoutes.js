@@ -4,6 +4,8 @@ import {
 	Login,
 	Register,
 	getByIDandUpdate,
+	GetMyTasks,
+	GetMyProjects,
 } from '../controllers/employee/index.js';
 const router = express.Router();
 
@@ -11,4 +13,6 @@ router.route('/login').post(Login);
 router.route('/register').post(Register);
 router.route('/getTasks').get();
 router.route('/update').put(EmployeeAuthValidator, getByIDandUpdate);
+router.route('/projects/tasks/mine').get(EmployeeAuthValidator, GetMyTasks);
+router.route('/projects/mine').get(EmployeeAuthValidator, GetMyProjects);
 export default router;

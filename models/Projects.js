@@ -19,7 +19,7 @@ const projectSchema = mongoose.Schema(
 			type: String,
 		},
 		startingDate: {
-			type: Date,
+			type: String,
 			required: [true, 'Missing Starting Date'],
 		},
 		image: {
@@ -45,12 +45,7 @@ const projectSchema = mongoose.Schema(
 					type: String,
 				},
 				endingDate: {
-					type: Date,
-					validate: {
-						validator: function () {
-							return this.endingDate >= Date.now;
-						},
-					},
+					type: String,
 				},
 				achieved: {
 					type: Boolean,
@@ -83,12 +78,7 @@ const projectSchema = mongoose.Schema(
 					},
 				},
 				deadline: {
-					type: Date,
-					validate: {
-						validator: function () {
-							return this.deadline >= Date.now;
-						},
-					},
+					type: String,
 				},
 				comments: [
 					{
@@ -102,12 +92,7 @@ const projectSchema = mongoose.Schema(
 					},
 				],
 				startingDate: {
-					type: Date,
-					validate: {
-						validator: function () {
-							return this.startingDate > Date.now;
-						},
-					},
+					type: String,
 				},
 				files: [
 					{
