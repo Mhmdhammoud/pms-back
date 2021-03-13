@@ -58,6 +58,13 @@ export default async (req, res) => {
 		const PROJECT = await Project.findById(PROJECT_ID);
 		const {tasks: ALL_TASKS} = PROJECT;
 		let TASK = ALL_TASKS.find((el) => el._id == TASK_ID);
+		if (!TASK) {
+			return res.status(404).json({
+				status: 'Failure',
+				message: 'Task was not found',
+				requestTime: new Date().toISOString(),
+			});
+		}
 		let ALL_OTHER_TASKS = ALL_TASKS.filter((el) => el._id != TASK_ID);
 		let UPDATED_TASK = {
 			title: TASK.title,
