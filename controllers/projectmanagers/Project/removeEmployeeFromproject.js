@@ -55,6 +55,12 @@ export default async (req, res) => {
 		if (!UPDATED_PROJECT) {
 			throw new Error('Internal Server Error');
 		}
+		const NEW_PROJECT = await (await Project.findById(PROJECT_ID))
+			.select('-__v')
+			.populate(
+				'projectEmployees.employeeID',
+				'image fullName email _id phone'
+			);
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Employee was removed from project successfully',
