@@ -7,15 +7,15 @@ export default async (req, res) => {
 			return res.status(404).json({
 				status: 'Failure',
 				message: 'Employee was not found',
-				manager: null,
+				employee: null,
 			});
 		}
 		const DELTED_EMPLOYEE = await Employee.findByIdAndDelete(EMPLOYEE_ID);
 		if (DELTED_EMPLOYEE) {
 			return res.status(200).json({
-				status: 'Failure',
+				status: 'Success',
 				message: 'Employee was deleted successfully',
-				manager: null,
+				employee: null,
 			});
 		}
 	} catch (error) {
