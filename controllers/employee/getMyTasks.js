@@ -13,15 +13,16 @@ export default async (req, res) => {
 		let MY_TASKS = [];
 		ALL_PROJECTS.map((el) => {
 			if (el.tasks.length !== 0) {
-				MY_TASKS = el.tasks.filter(
+				let projectMyTasks = el.tasks.filter(
 					(element) => element.employeeID._id == EMPLOYEE_ID
 				);
+				MY_TASKS.push(projectMyTasks);
 			} else {
 				return;
 			}
 		});
 
-		if (MY_TASKS.length === 0) {
+		if (projectMyTasks.length === 0) {
 			return res.status(200).json({
 				status: 'Status',
 				message: 'You have no tasks yet',
@@ -31,8 +32,8 @@ export default async (req, res) => {
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Tasks were fetched successfully',
-			tasks: MY_TASKS,
-			length: MY_TASKS.length,
+			tasks: projectMyTasks,
+			length: projectMyTasks.length,
 			requestTime: new Date().toISOString(),
 		});
 	} catch (error) {
