@@ -14,8 +14,6 @@ export default async (req, res) => {
 		ALL_PROJECTS.map((el) => {
 			if (el.tasks.length !== 0) {
 				let projectMyTasks = el.tasks.filter((element) => {
-					console.log(element.employeeID._id);
-					console.log(EMPLOYEE_ID);
 					return element.employeeID._id == EMPLOYEE_ID;
 				});
 				let combined = {

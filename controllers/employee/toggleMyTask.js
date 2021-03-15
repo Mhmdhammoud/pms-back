@@ -112,9 +112,43 @@ export default async (req, res) => {
 		const DONE_TASKS = ALL_UPDATED_PROJECTS_NEW.filter(
 			(el) => el.status == 'Done'
 		);
+		const ALL_PROJECTS = await Project.find({})
+			.populate(
+				'projectEmployees.employeeID',
+				'fullName image _id email phone'
+			)
+			.populate('tasks.employeeID', 'fullName image email _id phone')
+			.populate('projectManager', 'fullName email phone image _id')
+			.select('-__v');
+		let MY_TASKS = [];
+		ALL_PROJECTS.map((el) => {
+			if (el.tasks.length !== 0) {
+				let projectMyTasks = el.tasks.filter((element) => {
+					return element.employeeID._id == EMPLOYEE_ID;
+				});
+				let combined = {
+					projectID: el._id,
+					projectTitle: el.title,
+					projectMyTasks: projectMyTasks,
+				};
+				MY_TASKS.push(combined);
+			} else {
+				return;
+			}
+		});
+
+		if (MY_TASKS.length === 0) {
+			return res.status(200).json({
+				status: 'Status',
+				message: 'You have no tasks yet',
+				requestTime: new Date().toISOString(),
+			});
+		}
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Task was updated successfully',
+			tasks: MY_TASKS,
+			length: MY_TASKS.length,
 			tasks: UPDATED_PROJECT.tasks,
 			todoTasks: TODO_TASKS,
 			inProgressTasks: INPROGRESS_TASKS,
