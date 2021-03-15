@@ -10,12 +10,15 @@ before((done) => {
 
 	Promise.reject(new Error('rejection error'));
 	//connection
-	mongoose.connect(process.env.MONGO_URI, {
-		useUnifiedTopology: true,
-		useNewUrlParser: true,
-		useCreateIndex: true,
-		useFindAndModify: false,
-	});
+	mongoose.connect(
+		'mongodb+srv://hadyachkar:xFYYTQ2ehV9WeA8f@cluster0.dego8.mongodb.net/pms?retryWrites=true&w=majority',
+		{
+			useUnifiedTopology: true,
+			useNewUrlParser: true,
+			useCreateIndex: true,
+			useFindAndModify: false,
+		}
+	);
 	mongoose.connection
 		.once('open', () => {
 			console.log('Connected to db successfully');
