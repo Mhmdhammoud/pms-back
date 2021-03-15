@@ -13,9 +13,15 @@ export default async (req, res) => {
 		let MY_TASKS = [];
 		ALL_PROJECTS.map((el) => {
 			if (el.tasks.length !== 0) {
-				MY_TASKS = el.tasks.filter(
-					(element) => element.employeeID._id == EMPLOYEE_ID
-				);
+				let projectMyTasks = el.tasks.filter((element) => {
+					return element.employeeID._id == EMPLOYEE_ID;
+				});
+				let combined = {
+					projectID: el._id,
+					projectTitle: el.title,
+					projectMyTasks: projectMyTasks,
+				};
+				MY_TASKS.push(combined);
 			} else {
 				return;
 			}

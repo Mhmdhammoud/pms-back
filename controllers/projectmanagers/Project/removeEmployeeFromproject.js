@@ -31,7 +31,6 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		console.log('here?');
 		const PROJECT = await Project.findById(PROJECT_ID);
 
 		const EMPLOYEE_TOBE_DELETED = PROJECT.projectEmployees.find(

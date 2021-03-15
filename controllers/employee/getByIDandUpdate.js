@@ -27,7 +27,7 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		if (!USER_PASSWORD) {
+		if (!USER_PASSWORD || USER_PASSWORD === '') {
 			const UPDATED_EMPLOYEE = await Employee.findByIdAndUpdate(USER_ID, {
 				$set: {
 					fullName: USER_NAME,
