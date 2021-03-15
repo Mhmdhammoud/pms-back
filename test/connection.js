@@ -10,6 +10,7 @@ before((done) => {
 
 	Promise.reject(new Error('rejection error'));
 	//connection
+	// testing usless shit
 	mongoose.connect(
 		'mongodb+srv://hadyachkar:xFYYTQ2ehV9WeA8f@cluster0.dego8.mongodb.net/pms?retryWrites=true&w=majority',
 		{
