@@ -109,16 +109,32 @@ const projectSchema = mongoose.Schema(
 				startingDate: {
 					type: String,
 				},
-				files: [
+				managerFiles: [
 					{
-						URL: String,
+						src: String,
+						fileName: String,
 						createdAt: {
 							type: Date,
 							default: Date.now,
 						},
-						ownerName: String,
-						ownerImage: String,
-						ownerImage: String,
+						manager: {
+							type: mongoose.Schema.Types.ObjectId,
+							ref: 'Manager',
+						},
+					},
+				],
+				employeeFiles: [
+					{
+						src: String,
+						fileName: String,
+						createdAt: {
+							type: Date,
+							default: Date.now,
+						},
+						employee: {
+							type: mongoose.Schema.Types.ObjectId,
+							ref: 'Employee',
+						},
 					},
 				],
 			},
@@ -132,7 +148,36 @@ const projectSchema = mongoose.Schema(
 				},
 			},
 		],
+		managerFiles: [
+			{
+				src: String,
+				fileName: String,
+				createdAt: {
+					type: Date,
+					default: Date.now,
+				},
+				manager: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Manager',
+				},
+			},
+		],
+		employeeFiles: [
+			{
+				src: String,
+				fileName: String,
+				createdAt: {
+					type: Date,
+					default: Date.now,
+				},
+				employee: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Employee',
+				},
+			},
+		],
 	},
+
 	{
 		timestamps: true,
 	}
