@@ -1,4 +1,4 @@
-import {Project} from '../../../models/index.js';
+import {Project, Employee} from '../../../models/index.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
@@ -60,10 +60,29 @@ export default async (req, res) => {
 				'projectEmployees.employeeID',
 				'image fullName email _id phone'
 			);
+		const EMPLOYEE = await Employee.findById(EMPLPOYEE_ID);
+		const {projects: EMPLOYEE_PROJECTS, tasks: EMPLOYEE_TASKS} = EMPLOYEE;
+		let _filteredProjects = EMPLOYEE_PROJECTS.filter(
+			(el) => el.project != PROJECT_ID
+		);
+		let _filteredTasks = EMPLOYEE_TASKS.filter(
+			(el) => el.projectID != PROJECT_ID
+		);
+		const UPDATED_EMPLOYEE = await Employee.findByIdAndUpdate(
+			EMPLPOYEE_ID,
+			{
+				$set: {
+					projects: _filteredProjects,
+					tasks: _filteredTasks,
+				},
+			}
+		);
+
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Employee was removed from project successfully',
 			project: NEW_PROJECT,
+			updatedEmployee: UPDATED_EMPLOYEE,
 			requestTime: new Date().toISOString(),
 		});
 	} catch (error) {

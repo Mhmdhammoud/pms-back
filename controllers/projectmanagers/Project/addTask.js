@@ -62,6 +62,8 @@ export default async (req, res) => {
 						projectTitle: UpdatedProject.title,
 						deadline: deadline,
 						createdAt: new Date().toISOString(),
+						projectID: req.id,
+						description,
 					},
 				],
 			},

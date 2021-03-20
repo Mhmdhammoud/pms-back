@@ -41,6 +41,8 @@ const employeeSchema = mongoose.Schema(
 				title: String,
 				projectTitle: String,
 				deadline: String,
+				projectID: String,
+				description: String,
 			},
 		],
 	},
