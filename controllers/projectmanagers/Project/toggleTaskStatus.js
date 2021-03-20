@@ -1,4 +1,5 @@
 import {Project} from '../../../models/index.js';
+import {ToggleTask} from '../../Constants/newsFeed.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
@@ -55,7 +56,10 @@ export default async (req, res) => {
 					requestTime: new Date().toISOString(),
 				});
 		}
-		const PROJECT = await Project.findById(PROJECT_ID);
+		const PROJECT = await Project.findById(PROJECT_ID).populate(
+			'projectManager',
+			'fullName'
+		);
 		const {tasks: ALL_OUTDATED_TASKS} = PROJECT;
 		let TASK = ALL_OUTDATED_TASKS.find((el) => el._id == TASK_ID);
 		if (!TASK) {
@@ -85,6 +89,16 @@ export default async (req, res) => {
 			{
 				$set: {
 					tasks: ALL_UPDATED_TASKS,
+				},
+				$push: {
+					news: {
+						title: ToggleTask(
+							TASK.title,
+							TASK.status,
+							NEW_STATUS,
+							PROJECT.projectManager.fullName
+						),
+					},
 				},
 			},
 			{

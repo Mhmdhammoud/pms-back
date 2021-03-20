@@ -1,5 +1,5 @@
 import {Manager, Project} from '../../../models/index.js';
-import {NewMileStone} from '../Constants/newsFeed.js';
+import {NewMileStone} from '../../Constants/newsFeed.js';
 export default async (req, res) => {
 	try {
 		const {msTitle, endingDate} = req.body;

@@ -92,6 +92,7 @@ export default async (req, res) => {
 			milestones,
 			createdAt,
 			UpdatedAt,
+			news,
 		} = PROJECT;
 
 		return res.status(200).json({
@@ -108,6 +109,7 @@ export default async (req, res) => {
 				createdAt,
 				UpdatedAt,
 				tasks: _filteredTasks,
+				news,
 			},
 			requestTime: req.requestedAt,
 		});

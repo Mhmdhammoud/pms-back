@@ -1,4 +1,5 @@
 import {Project, Manager} from '../../../models/index.js';
+import {FinalizeTask} from '../../Constants/newsFeed.js';
 export default async (req, res) => {
 	try {
 		const {type: USER_TYPE} = req.user;
@@ -18,7 +19,10 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		const PROJECT = await Project.findById(PROJECT_ID);
+		const PROJECT = await Project.findById(PROJECT_ID).populate(
+			'projectManager',
+			'fullName'
+		);
 		const {tasks: ALL_TASKS} = PROJECT;
 		let TASK = ALL_TASKS.find((el) => el._id == TASK_ID);
 		let ALL_OTHER_TASKS = ALL_TASKS.filter((el) => el._id != TASK_ID);
@@ -48,6 +52,14 @@ export default async (req, res) => {
 			{
 				$set: {
 					tasks: ALL_UPDATED_TASKS,
+				},
+				$push: {
+					news: {
+						title: FinalizeTask(
+							TASK.title,
+							PROJECT.projectManager.fullName
+						),
+					},
 				},
 			},
 			{
