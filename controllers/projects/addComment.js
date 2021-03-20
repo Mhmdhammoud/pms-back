@@ -38,8 +38,8 @@ export default async (req, res) => {
 		}
 
 		switch (USER_TYPE) {
-			case 'Manager':
-				let PROJECT = await Project.findById(PROJECT_ID);
+			case 'Manager': {
+				const PROJECT = await Project.findById(PROJECT_ID);
 				const MANAGER = await Manager.findById(USER_ID);
 				if (!MANAGER) {
 					return res.status(404).json({
@@ -48,7 +48,6 @@ export default async (req, res) => {
 						requestTime: new Date().toISOString(),
 					});
 				}
-				const {fullName: USER_NAME, image: USER_IMAGE} = MANAGER;
 
 				if (PROJECT.projectManager != USER_ID) {
 					return res.status(403).json({
@@ -81,14 +80,14 @@ export default async (req, res) => {
 					files: TASK.files,
 					status: TASK.status,
 					description: TASK.description,
-					comments: [
-						...TASK.comments,
+					managerComments: [
+						...TASK.managerComments,
 						{
 							text: COMMENT_TEXT,
-							ownerName: USER_NAME,
-							onwerImage: USER_IMAGE,
+							manager: USER_ID,
 						},
 					],
+					employeesComments: TASK.employeeComments,
 				};
 				ALL_OTHER_TASKS.push(UPDATED_TASK);
 				let ALL_UPDATED_TASKS = ALL_OTHER_TASKS;
@@ -114,8 +113,9 @@ export default async (req, res) => {
 				} else {
 					throw new Error('Internal Server Error');
 				}
-			case 'Employee':
-				PROJECT = await Project.findById(PROJECT_ID);
+			}
+			case 'Employee': {
+				const PROJECT = await Project.findById(PROJECT_ID);
 				const EMPLOYEE = await Employee.findById(USER_ID);
 				if (!EMPLOYEE) {
 					return res.status(404).json({
@@ -124,10 +124,6 @@ export default async (req, res) => {
 						requestTime: new Date().toISOString(),
 					});
 				}
-				const {
-					fullName: EMPLOYEE_NAME,
-					image: EMPLOYEE_IMAGE,
-				} = EMPLOYEE;
 
 				const FOUND = PROJECT.projectEmployees.find(
 					(el) => el.employeeID == USER_ID
@@ -141,8 +137,10 @@ export default async (req, res) => {
 				}
 
 				const {tasks: allTasks} = PROJECT;
-				TASK = allTasks.find((el) => el._id == TASK_ID);
-				ALL_OTHER_TASKS = allTasks.filter((el) => el._id != TASK_ID);
+				let TASK = allTasks.find((el) => el._id == TASK_ID);
+				let ALL_OTHER_TASKS = allTasks.filter(
+					(el) => el._id != TASK_ID
+				);
 
 				if (!TASK) {
 					return res.status(404).json({
@@ -152,7 +150,7 @@ export default async (req, res) => {
 					});
 				}
 
-				UPDATED_TASK = {
+				let UPDATED_TASK = {
 					...TASK,
 					title: TASK.title,
 					employeeID: TASK.employeeID,
@@ -160,17 +158,17 @@ export default async (req, res) => {
 					deadline: TASK.deadline,
 					startingDate: TASK.startingDate,
 					files: TASK.files,
-					comments: [
-						...TASK.comments,
+					employeesComments: [
+						...TASK.employeesComments,
 						{
 							text: COMMENT_TEXT,
-							ownerName: EMPLOYEE_NAME,
-							onwerImage: EMPLOYEE_IMAGE,
+							employee: USER_ID,
 						},
 					],
+					managerComments: TASK.managerComments,
 				};
 				ALL_OTHER_TASKS.push(UPDATED_TASK);
-				ALL_UPDATED_TASKS = ALL_OTHER_TASKS;
+				let ALL_UPDATED_TASKS = ALL_OTHER_TASKS;
 				const EMPLOYEE_UPDATED_PROJECT = await Project.findByIdAndUpdate(
 					PROJECT_ID,
 					{
@@ -193,6 +191,7 @@ export default async (req, res) => {
 				} else {
 					throw new Error('Internal Server Error');
 				}
+			}
 			default:
 				return res.status(403).json({
 					status: 'Failure',

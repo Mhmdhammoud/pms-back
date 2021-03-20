@@ -26,7 +26,7 @@ export default async (req, res) => {
 		) {
 			return res.status(400).json({
 				status: 'Failure',
-				message: 'Expected msTitle & endingDate',
+				message: 'Expected description & endingDate',
 				requestTime: req.requestedAt,
 			});
 		} else if (req.id != mongoose.Types.ObjectId(req.id)) {

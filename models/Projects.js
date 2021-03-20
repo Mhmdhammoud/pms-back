@@ -80,11 +80,26 @@ const projectSchema = mongoose.Schema(
 				deadline: {
 					type: String,
 				},
-				comments: [
+				managerComments: [
 					{
 						text: String,
-						ownerName: String,
-						onwerImage: String,
+						manager: {
+							type: mongoose.Schema.Types.ObjectId,
+							ref: 'Manager',
+						},
+						createdAt: {
+							type: Date,
+							default: Date.now,
+						},
+					},
+				],
+				employeesComments: [
+					{
+						text: String,
+						employee: {
+							type: mongoose.Schema.Types.ObjectId,
+							ref: 'Employee',
+						},
 						createdAt: {
 							type: Date,
 							default: Date.now,
