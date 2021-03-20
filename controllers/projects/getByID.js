@@ -44,6 +44,7 @@ export default async (req, res) => {
 					_filteredComments.push({
 						_id: element._id,
 						text: element.text,
+						type: 'Manager',
 						user: {
 							fullName: element.manager.fullName,
 							_id: element.manager._id,
@@ -54,6 +55,7 @@ export default async (req, res) => {
 					_filteredComments.push({
 						_id: element._id,
 						text: element.text,
+						type: 'Employee',
 						user: {
 							fullName: element.employee.fullName,
 							_id: element.employee._id,
@@ -70,7 +72,7 @@ export default async (req, res) => {
 				deadline: el.deadline,
 				startingDate: el.startingDate,
 				files: el.files,
-				comments: _allComments,
+				comments: _filteredComments,
 			});
 			_allComments = [];
 			_filteredComments = [];

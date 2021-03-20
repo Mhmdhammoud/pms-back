@@ -35,6 +35,53 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		} else {
+			let _allComments = [];
+			let _filteredComments = [];
+
+			TASK.employeesComments.map((employeElement) => {
+				_allComments.push(employeElement);
+			});
+			TASK.managerComments.map((managerElement) => {
+				_allComments.push(managerElement);
+			});
+			_allComments.map((element) => {
+				if (element.manager) {
+					_filteredComments.push({
+						_id: element._id,
+						text: element.text,
+						user: {
+							fullName: element.manager.fullName,
+							_id: element.manager._id,
+							image: element.manager.image,
+						},
+					});
+				} else {
+					_filteredComments.push({
+						_id: element._id,
+						text: element.text,
+						user: {
+							fullName: element.employee.fullName,
+							_id: element.employee._id,
+							image: element.employee.image,
+						},
+					});
+				}
+			});
+			let _filteredTask = {
+				title: TASK.title,
+				description: TASK.description,
+				employeeID: TASK.employeeID,
+				duration: TASK.duration,
+				deadline: TASK.deadline,
+				startingDate: TASK.startingDate,
+				files: TASK.files,
+				comments: _allComments,
+			};
+
+			_allComments = [];
+			_filteredComments = [];
+			console.log(_filteredTask);
+
 			return res.status(200).json({
 				status: 'Success',
 				message: 'Task was retrieved successfully',
