@@ -123,6 +123,15 @@ const projectSchema = mongoose.Schema(
 				],
 			},
 		],
+		news: [
+			{
+				title: String,
+				createdAt: {
+					type: Date,
+					default: Date.now,
+				},
+			},
+		],
 	},
 	{
 		timestamps: true,
