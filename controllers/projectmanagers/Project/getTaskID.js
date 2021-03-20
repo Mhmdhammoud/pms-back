@@ -18,7 +18,15 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		const PROJECT = await Project.findById(PROJECT_ID);
+		const PROJECT = await Project.findById(PROJECT_ID)
+			.populate(
+				'tasks.employeesComments.employee',
+				' fullName email image phone _id'
+			)
+			.populate(
+				'tasks.managerComments.manager',
+				'fullName email image  _id'
+			);
 		if (!PROJECT) {
 			return res.status(404).json({
 				status: 'Failure',
@@ -49,6 +57,7 @@ export default async (req, res) => {
 					_filteredComments.push({
 						_id: element._id,
 						text: element.text,
+						type: 'Manager',
 						user: {
 							fullName: element.manager.fullName,
 							_id: element.manager._id,
@@ -59,6 +68,7 @@ export default async (req, res) => {
 					_filteredComments.push({
 						_id: element._id,
 						text: element.text,
+						type: 'Employee',
 						user: {
 							fullName: element.employee.fullName,
 							_id: element.employee._id,
@@ -67,6 +77,8 @@ export default async (req, res) => {
 					});
 				}
 			});
+			_filteredComments.sort((a, b) => a.createdAt - b.createdAt);
+
 			let _filteredTask = {
 				title: TASK.title,
 				description: TASK.description,
@@ -75,17 +87,16 @@ export default async (req, res) => {
 				deadline: TASK.deadline,
 				startingDate: TASK.startingDate,
 				files: TASK.files,
-				comments: _allComments,
+				comments: _filteredComments,
 			};
 
 			_allComments = [];
 			_filteredComments = [];
-			console.log(_filteredTask);
 
 			return res.status(200).json({
 				status: 'Success',
 				message: 'Task was retrieved successfully',
-				task: TASK,
+				task: _filteredTask,
 				requestTime: new Date().toISOString(),
 			});
 		}

@@ -45,6 +45,7 @@ export default async (req, res) => {
 						_id: element._id,
 						text: element.text,
 						type: 'Manager',
+						createdAt: element.createdAt,
 						user: {
 							fullName: element.manager.fullName,
 							_id: element.manager._id,
@@ -56,6 +57,7 @@ export default async (req, res) => {
 						_id: element._id,
 						text: element.text,
 						type: 'Employee',
+						createdAt: element.createdAt,
 						user: {
 							fullName: element.employee.fullName,
 							_id: element.employee._id,
@@ -64,6 +66,7 @@ export default async (req, res) => {
 					});
 				}
 			});
+			_filteredComments.sort((a, b) => a.createdAt - b.createdAt);
 			_filteredTasks.push({
 				title: el.title,
 				description: el.description,
@@ -74,6 +77,7 @@ export default async (req, res) => {
 				files: el.files,
 				comments: _filteredComments,
 			});
+
 			_allComments = [];
 			_filteredComments = [];
 		});
@@ -89,6 +93,7 @@ export default async (req, res) => {
 			createdAt,
 			UpdatedAt,
 		} = PROJECT;
+
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Project was fetched successfully',
