@@ -27,12 +27,24 @@ export default async (req, res) => {
 					},
 				}
 			);
+			const UPDATED_PROJECT = await Project.findByIdAndUpdate(
+				NewProject._id,
+				{
+					$push: {
+						news: [
+							{
+								title: `${NewProject.title} was created`,
+							},
+						],
+					},
+				}
+			);
 			if (UPDATED_MANAGER) {
 				return res.status(200).json({
 					status: 'Success',
 					message: 'Project was created succsessully',
 					requestTime: req.requestedAt,
-					project: NewProject,
+					project: UPDATED_PROJECT,
 				});
 			} else {
 				throw new Error('Internal Server Error');

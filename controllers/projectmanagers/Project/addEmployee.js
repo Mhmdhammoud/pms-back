@@ -1,4 +1,5 @@
 import {Project, Employee} from '../../../models/index.js';
+import {JoinedProject} from '../Constants/newsFeed.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
@@ -15,10 +16,15 @@ export default async (req, res) => {
 				message: 'Bad request, wrong employee id format',
 			});
 		}
+		const EMPLOYEE = await Employee.findById(EMPLOYEE_ID);
+		const PROJECT = await Project.findById(PROJECT_ID);
 		await Project.findByIdAndUpdate(PROJECT_ID, {
 			$push: {
 				projectEmployees: {
 					employeeID: EMPLOYEE_ID,
+				},
+				news: {
+					title: JoinedProject(EMPLOYEE.fullName, PROJECT.title),
 				},
 			},
 		});

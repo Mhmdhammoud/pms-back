@@ -1,4 +1,5 @@
 import {Project, Employee} from '../../../models/index.js';
+import {NewTask} from '../Constants/newsFeed.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
@@ -36,6 +37,12 @@ export default async (req, res) => {
 				requestTime: req.requestedAt,
 			});
 		}
+		const PROJECT = await Project.findById(req.id)
+			.select('-__v -updatedAt -createdAt')
+			.populate('projectManager', 'fullName email image')
+			.populate('projectEmployees.employeeID', 'fullName email image')
+			.populate('tasks.employeeID', 'fullName image email');
+
 		await Project.findByIdAndUpdate(req.id, {
 			$push: {
 				tasks: {
@@ -47,6 +54,12 @@ export default async (req, res) => {
 					description,
 					status: 'TO-DO',
 				},
+				news: {
+					title: NewTask(
+						PROJECT.projectManager.fullName,
+						PROJECT.title
+					),
+				},
 			},
 		});
 		const UpdatedProject = await Project.findById(req.id)
@@ -54,18 +67,17 @@ export default async (req, res) => {
 			.populate('projectManager', 'fullName email image')
 			.populate('projectEmployees.employeeID', 'fullName email image')
 			.populate('tasks.employeeID', 'fullName image email');
+
 		const UPDATED_EMPLOYEE = await Employee.findByIdAndUpdate(employeeID, {
 			$push: {
-				tasks: [
-					{
-						title: title,
-						projectTitle: UpdatedProject.title,
-						deadline: deadline,
-						createdAt: new Date().toISOString(),
-						projectID: req.id,
-						description,
-					},
-				],
+				tasks: {
+					title: title,
+					projectTitle: UpdatedProject.title,
+					deadline: deadline,
+					createdAt: new Date().toISOString(),
+					projectID: req.id,
+					description,
+				},
 			},
 		});
 		if (UPDATED_EMPLOYEE) {
