@@ -1,4 +1,5 @@
-import {Project} from '../../models/index.js';
+import {Project, Employee} from '../../models/index.js';
+import {ToggleMyTask} from '../Constants/newsFeed.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
@@ -38,7 +39,7 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-
+		const EMPLOYEE = await Employee.findById(AUTH_ID);
 		let NEW_STATUS;
 		switch (NEW_TASK_STATUS) {
 			case '1':
@@ -97,6 +98,16 @@ export default async (req, res) => {
 				$set: {
 					tasks: ALL_UPDATED_TASKS,
 				},
+				$push: {
+					news: {
+						title: ToggleMyTask(
+							EMPLOYEE.fullName,
+							TASK.title,
+							TASK.status,
+							NEW_STATUS
+						),
+					},
+				},
 			},
 			{
 				new: true,
@@ -124,7 +135,7 @@ export default async (req, res) => {
 		ALL_PROJECTS.map((el) => {
 			if (el.tasks.length !== 0) {
 				let projectMyTasks = el.tasks.filter((element) => {
-					return element.employeeID._id == EMPLOYEE_ID;
+					return element.employeeID._id == AUTH_ID;
 				});
 				let combined = {
 					projectID: el._id,

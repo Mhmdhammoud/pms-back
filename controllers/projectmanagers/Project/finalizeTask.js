@@ -1,5 +1,5 @@
 import {Project, Manager} from '../../../models/index.js';
-import {FinalizeTask} from '../Constants/newsFeed.js';
+import {FinalizeTask} from '../../Constants/newsFeed.js';
 export default async (req, res) => {
 	try {
 		const {type: USER_TYPE} = req.user;

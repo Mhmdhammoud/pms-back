@@ -15,3 +15,5 @@ export const FinalizeTask = (task, manager) =>
 
 export const RemoveEmployee = (manager, employee, project) =>
 	`Manager ${manager} just removed ${employee} from ${project}.`;
+export const ToggleMyTask = (employee, task, oldStatus, newStatus) =>
+	`Employee ${employee} just moved ${task} from ${oldStatus} to ${newStatus}`;

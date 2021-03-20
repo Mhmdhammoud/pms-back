@@ -1,5 +1,5 @@
 import {Project} from '../../../models/index.js';
-import {ToggleTask} from '../Constants/newsFeed.js';
+import {ToggleTask} from '../../Constants/newsFeed.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {

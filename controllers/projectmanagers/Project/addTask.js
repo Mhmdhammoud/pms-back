@@ -1,5 +1,5 @@
 import {Project, Employee} from '../../../models/index.js';
-import {NewTask} from '../Constants/newsFeed.js';
+import {NewTask} from '../../Constants/newsFeed.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
