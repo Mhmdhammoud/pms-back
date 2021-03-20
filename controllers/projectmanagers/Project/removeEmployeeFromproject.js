@@ -1,4 +1,5 @@
 import {Project, Employee} from '../../../models/index.js';
+import {RemoveEmployee} from '../Constants/newsFeed.js';
 import mongoose from 'mongoose';
 export default async (req, res) => {
 	try {
@@ -31,7 +32,10 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		const PROJECT = await Project.findById(PROJECT_ID);
+		const PROJECT = await Project.findById(PROJECT_ID).populate(
+			'projectManager',
+			'fullName'
+		);
 
 		const EMPLOYEE_TOBE_DELETED = PROJECT.projectEmployees.find(
 			(el) => el.employeeID == EMPLPOYEE_ID
@@ -46,9 +50,20 @@ export default async (req, res) => {
 		const FILTERED_EMPLOYEES = PROJECT.projectEmployees.filter(
 			(el) => el.employeeID != EMPLPOYEE_ID
 		);
+		const EMPLOYEE = await Employee.findById(EMPLPOYEE_ID);
+
 		const UPDATED_PROJECT = await Project.findByIdAndUpdate(PROJECT_ID, {
 			$set: {
 				projectEmployees: FILTERED_EMPLOYEES,
+			},
+			$push: {
+				news: {
+					title: RemoveEmployee(
+						PROJECT.projectManager.fullName,
+						EMPLOYEE.fullName,
+						PROJECT.title
+					),
+				},
 			},
 		});
 		if (!UPDATED_PROJECT) {
@@ -60,7 +75,6 @@ export default async (req, res) => {
 				'projectEmployees.employeeID',
 				'image fullName email _id phone'
 			);
-		const EMPLOYEE = await Employee.findById(EMPLPOYEE_ID);
 		const {projects: EMPLOYEE_PROJECTS, tasks: EMPLOYEE_TASKS} = EMPLOYEE;
 		let _filteredProjects = EMPLOYEE_PROJECTS.filter(
 			(el) => el.project != PROJECT_ID
