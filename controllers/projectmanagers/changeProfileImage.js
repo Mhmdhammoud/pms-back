@@ -49,19 +49,21 @@ export default async (req, res) => {
 			s3.upload(params, (err, data) => {
 				if (err) {
 					console.log('error in upload Task file' + err);
-				}
-			});
-			Manager.findByIdAndUpdate(MANAGER_ID, {
-				$set: {
-					image: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
-				},
-			}).then((UPDATED_MANAGER) => {
-				if (UPDATED_MANAGER) {
-					return res.status(200).json({
-						status: 'Success',
-						message: 'Profile Image was uploaded successfully',
-						imageSrc: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
-						requestTime: new Date().toISOString(),
+				} else {
+					Manager.findByIdAndUpdate(MANAGER_ID, {
+						$set: {
+							image: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
+						},
+					}).then((UPDATED_MANAGER) => {
+						if (UPDATED_MANAGER) {
+							return res.status(200).json({
+								status: 'Success',
+								message:
+									'Profile Image was uploaded successfully',
+								imageSrc: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
+								requestTime: new Date().toISOString(),
+							});
+						}
 					});
 				}
 			});
