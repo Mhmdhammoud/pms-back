@@ -9,7 +9,7 @@ describe('Uploading a manager profile image ', () => {
 			.then(() => done())
 			.catch((err) => done(err));
 	});
-	it('FAIL, upload manager profile image without Manager Login', (done) => {
+	it('FAIL, Upload manager profile image without Manager Login', (done) => {
 		request(app)
 			.put('/api/v1/manager/profile/image')
 			.attach('profileImage', '../storm.jpg')
@@ -24,7 +24,7 @@ describe('Uploading a manager profile image ', () => {
 			})
 			.catch((err) => done(err));
 	});
-	it('FAIL, Create a new project with Employee Login', (done) => {
+	it('FAIL, Upload manager profile image with Employee Login', (done) => {
 		request(app)
 			.post('/api/v1/employee/login')
 			.send({
@@ -36,13 +36,8 @@ describe('Uploading a manager profile image ', () => {
 				expect(body).to.contain.property('status');
 				expect(body.status).to.equal('success');
 				request(app)
-					.post('/api/v1/manager/project/create')
-					.send({
-						title: 'New Test Project',
-						duration: 12,
-						startingDate: new Date().toISOString(),
-						description: 'New create project test description',
-					})
+					.put('/api/v1/manager/profile/image')
+					.attach('profileImage', '../storm.jpg')
 					.set({Authorization: `Bearer ${body.token}`})
 					.then(({body}) => {
 						expect(body).to.contain.property('message');
@@ -55,7 +50,7 @@ describe('Uploading a manager profile image ', () => {
 			})
 			.catch((err) => done(err));
 	});
-	it('PASS, Create a new project with Manager Login', (done) => {
+	it('PASS,  Upload manager profile image with Manager Login', (done) => {
 		request(app)
 			.post('/api/v1/manager/login')
 			.send({
@@ -67,19 +62,13 @@ describe('Uploading a manager profile image ', () => {
 				expect(body).to.contain.property('status');
 				expect(body.status).to.equal('success');
 				request(app)
-					.post('/api/v1/manager/project/create')
-					.send({
-						title: 'New Test Project',
-						duration: 12,
-						startingDate: new Date().toISOString(),
-						description: 'New create project test description',
-					})
+					.put('/api/v1/manager/profile/image')
+					.attach('profileImage', '../storm.jpg')
 					.set({Authorization: `Bearer ${body.token}`})
 					.then(({body}) => {
-						expect(body).to.contain.property('project');
+						expect(body).to.contain.property('imageSrc');
 						expect(body).to.contain.property('status');
 						expect(body.status).to.equal('Success');
-						expect(body.project).to.contain.property('_id');
 						done();
 					})
 					.catch((err) => done(err));

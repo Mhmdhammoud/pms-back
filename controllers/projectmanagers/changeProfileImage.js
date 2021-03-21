@@ -45,6 +45,7 @@ export default async (req, res) => {
 				ContentType: req.files.profileImage.mimetype,
 				ContentEncoding: req.files.profileImage.encoding,
 			};
+			console.log(params);
 			s3.upload(params, (err, data) => {
 				if (err) {
 					console.log('error in upload Task file' + err);
