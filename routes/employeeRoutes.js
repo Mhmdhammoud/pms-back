@@ -7,6 +7,7 @@ import {
 	GetMyTasks,
 	GetMyProjects,
 	ToggleMyTaskStatus,
+	AddTasKFile,
 } from '../controllers/employee/index.js';
 const router = express.Router();
 
@@ -17,4 +18,5 @@ router.route('/update').put(EmployeeAuthValidator, getByIDandUpdate);
 router.route('/projects/tasks/mine').get(EmployeeAuthValidator, GetMyTasks);
 router.route('/projects/mine').get(EmployeeAuthValidator, GetMyProjects);
 router.route('/task/toggle').put(EmployeeAuthValidator, ToggleMyTaskStatus);
+router.route('/projects/tasks/file').put(EmployeeAuthValidator, AddTasKFile);
 export default router;

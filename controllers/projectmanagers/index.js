@@ -12,3 +12,4 @@ export {default as ToggleTaskStatus} from './Project/toggleTaskStatus.js';
 export {default as MyProjects} from './Project/getMyProjects.js';
 export {default as DeleteEmployee} from './employees/delete.js';
 export {default as RemoveEmployeeFromProject} from './Project/removeEmployeeFromproject.js';
+export {default as AddTaskFile} from './Project/uploadTaskFile.js';
