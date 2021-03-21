@@ -18,8 +18,7 @@ describe('Creating a project to collection project ', () => {
 				startingDate: new Date().toISOString(),
 				description: 'New create project test description',
 			})
-			.then((res) => {
-				const body = res.body;
+			.then(({body}) => {
 				expect(body).to.contain.property('message');
 				expect(body).to.contain.property('error');
 				expect(body.message).to.equal('Not Authorized');
@@ -30,41 +29,11 @@ describe('Creating a project to collection project ', () => {
 			})
 			.catch((err) => done(err));
 	});
-	it('OK, Create a new project with Manager Login', (done) => {
-		request(app)
-			.post('/api/v1/manager/login')
-			.send({
-				email: 'manager@pms.com',
-				password: '123',
-			})
-			.then(({body}) => {
-				expect(body).to.contain.property('token');
-				expect(body).to.contain.property('status');
-				expect(body.status).to.equal('success');
-				request(app)
-					.post('/api/v1/manager/project/create')
-					.send({
-						title: 'New Test Project',
-						duration: 12,
-						startingDate: new Date().toISOString(),
-						description: 'New create project test description',
-					})
-					.set({Authorization: `Bearer ${body.token}`})
-					.then(({body}) => {
-						expect(body).to.contain.property('project');
-						expect(body).to.contain.property('status');
-						expect(body.status).to.equal('Success');
-						expect(body.project).to.contain.property('_id');
-					})
-					.catch((err) => done(err));
-			})
-			.catch((err) => done(err));
-	});
-	it('OK, Create a new project with Employee Login', (done) => {
+	it('FAIL, Create a new project with Employee Login', (done) => {
 		request(app)
 			.post('/api/v1/employee/login')
 			.send({
-				email: 'hady@pms.com',
+				email: 'testing@employee.com',
 				password: '123',
 			})
 			.then(({body}) => {
@@ -85,6 +54,37 @@ describe('Creating a project to collection project ', () => {
 						expect(body).to.contain.property('error');
 						expect(body.message).to.equal('Internal Server Error');
 						expect(body.error).to.equal('invalid signature');
+						done();
+					})
+					.catch((err) => done(err));
+			})
+			.catch((err) => done(err));
+	});
+	it('PASS, Create a new project with Manager Login', (done) => {
+		request(app)
+			.post('/api/v1/manager/login')
+			.send({
+				email: 'testing@manager.com',
+				password: '123',
+			})
+			.then(({body}) => {
+				expect(body).to.contain.property('token');
+				expect(body).to.contain.property('status');
+				expect(body.status).to.equal('success');
+				request(app)
+					.post('/api/v1/manager/project/create')
+					.send({
+						title: 'New Test Project',
+						duration: 12,
+						startingDate: new Date().toISOString(),
+						description: 'New create project test description',
+					})
+					.set({Authorization: `Bearer ${body.token}`})
+					.then(({body}) => {
+						expect(body).to.contain.property('project');
+						expect(body).to.contain.property('status');
+						expect(body.status).to.equal('Success');
+						expect(body.project).to.contain.property('_id');
 						done();
 					})
 					.catch((err) => done(err));

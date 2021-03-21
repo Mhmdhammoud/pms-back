@@ -11,8 +11,6 @@ export default async (req, res) => {
 			});
 		}
 		const login = await user.matchPassword(password);
-		console.log(`User : ${user.fullName}`);
-		console.log(`login Status => ${login}`);
 		if (login === false) {
 			return res.status(401).json({
 				message: 'Wrong Credentials',
@@ -39,9 +37,6 @@ export default async (req, res) => {
 							message: 'Internal Server Error',
 						});
 					}
-					console.log(
-						`[i] Access Token generated for Employee : ${email}`
-					);
 					return res.status(200).json({
 						status: 'success',
 						id: user._id,

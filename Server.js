@@ -13,7 +13,6 @@ import multer from 'multer';
 import cors from 'cors';
 
 connectDB();
-dotenv.config();
 
 const app = express();
 
@@ -36,6 +35,8 @@ app.get('/', (req, res) => {
 if (process.env.NODE_ENV == 'development') {
 	app.use(morgan('dev'));
 }
+dotenv.config();
+
 app.use((req, res, next) => {
 	req.requestedAt = new Date().toISOString();
 	next();

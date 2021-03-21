@@ -59,9 +59,6 @@ export default async (req, res) => {
 							console.log(error);
 							throw new Error('Internal Server Error');
 						}
-						console.log(
-							`[i] Access Token generated for Employee : ${USER_EMAIL}`
-						);
 						return res.status(200).json({
 							status: 'success',
 							message: 'Employee was updated successfully',
@@ -113,9 +110,6 @@ export default async (req, res) => {
 							console.log(error);
 							throw new Error('Internal Server Error');
 						}
-						console.log(
-							`[i] Access Token generated for Employee : ${USER_EMAIL}`
-						);
 						return res.status(200).json({
 							status: 'success',
 							message: 'Employee was updated successfully',
