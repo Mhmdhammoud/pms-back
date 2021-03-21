@@ -12,8 +12,8 @@ import fileUpload from 'express-fileupload';
 import multer from 'multer';
 import cors from 'cors';
 
-dotenv.config();
 connectDB();
+dotenv.config();
 
 const app = express();
 
@@ -52,3 +52,4 @@ app.listen(PORT, () => {
 		`Server is running in ${process.env.NODE_ENV} port ${PORT}`.yellow.bold
 	);
 });
+export default app;
