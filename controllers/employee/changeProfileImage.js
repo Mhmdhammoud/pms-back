@@ -45,27 +45,25 @@ export default async (req, res) => {
 				ContentType: req.files.profileImage.mimetype,
 				ContentEncoding: req.files.profileImage.encoding,
 			};
-			s3.upload(params, async (err, data) => {
+			s3.upload(params, (err, data) => {
 				if (err) {
 					console.log('error in upload Task file' + err);
-					throw new Error(err);
 				} else {
-					const UPDATED_EMPLOYEE = await Employee.findByIdAndUpdate(
-						EMPLOYEE_ID,
-						{
-							$set: {
-								image: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
-							},
+					Employee.findByIdAndUpdate(EMPLOYEE_ID, {
+						$set: {
+							image: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
+						},
+					}).then((UPDATED_EMPLOYEE) => {
+						if (UPDATED_EMPLOYEE) {
+							return res.status(200).json({
+								status: 'Success',
+								message:
+									'Profile Image was uploaded successfully',
+								imageSrc: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
+								requestTime: new Date().toISOString(),
+							});
 						}
-					);
-					if (UPDATED_EMPLOYEE) {
-						return res.status(200).json({
-							status: 'Success',
-							message: 'Profile Image was uploaded successfully',
-							imageSrc: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
-							requestTime: new Date().toISOString(),
-						});
-					}
+					});
 				}
 			});
 		});
