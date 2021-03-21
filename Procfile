@@ -1,2 +1,2 @@
-web: node Server.js
+web: nodemon Server.js
 test: npm run test
