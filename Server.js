@@ -12,7 +12,7 @@ import fileUpload from 'express-fileupload';
 import multer from 'multer';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-// connectDB();
+connectDB();
 
 const app = express();
 
