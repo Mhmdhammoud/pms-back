@@ -148,34 +148,6 @@ const projectSchema = mongoose.Schema(
 				},
 			},
 		],
-		managerFiles: [
-			{
-				src: String,
-				fileName: String,
-				createdAt: {
-					type: Date,
-					default: Date.now,
-				},
-				manager: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Manager',
-				},
-			},
-		],
-		employeeFiles: [
-			{
-				src: String,
-				fileName: String,
-				createdAt: {
-					type: Date,
-					default: Date.now,
-				},
-				employee: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Employee',
-				},
-			},
-		],
 	},
 
 	{

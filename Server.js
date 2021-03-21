@@ -11,7 +11,7 @@ import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
 import multer from 'multer';
 import cors from 'cors';
-
+import bodyParser from 'body-parser';
 connectDB();
 
 const app = express();
@@ -28,6 +28,7 @@ app.use(
 	})
 );
 app.use(cors());
+app.use(bodyParser.json());
 app.use(multer().single(''));
 app.get('/', (req, res) => {
 	res.redirect('https://www.google.com');
