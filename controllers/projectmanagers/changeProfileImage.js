@@ -1,6 +1,29 @@
 import {Manager} from '../../models/index.js';
 import multer from 'multer';
 import AWS from 'aws-sdk';
+async function emptyS3Directory(s3, dir) {
+	const listParams = {
+		Bucket: process.env.BUCKET_NAME,
+		Prefix: dir,
+	};
+
+	const listedObjects = await s3.listObjectsV2(listParams).promise();
+
+	if (listedObjects.Contents.length === 0) return;
+
+	const deleteParams = {
+		Bucket: process.env.BUCKET_NAME,
+		Delete: {Objects: []},
+	};
+
+	listedObjects.Contents.forEach(({Key}) => {
+		deleteParams.Delete.Objects.push({Key});
+	});
+
+	await s3.deleteObjects(deleteParams).promise();
+
+	if (listedObjects.IsTruncated) await emptyS3Directory(dir);
+}
 export default async (req, res) => {
 	try {
 		const {id: MANAGER_ID} = req.user;
@@ -45,27 +68,28 @@ export default async (req, res) => {
 				ContentType: req.files.profileImage.mimetype,
 				ContentEncoding: req.files.profileImage.encoding,
 			};
-			console.log(params);
-			s3.upload(params, (err, data) => {
-				if (err) {
-					console.log('error in upload Task file' + err);
-				} else {
-					Manager.findByIdAndUpdate(MANAGER_ID, {
-						$set: {
-							image: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
-						},
-					}).then((UPDATED_MANAGER) => {
-						if (UPDATED_MANAGER) {
-							return res.status(200).json({
-								status: 'Success',
-								message:
-									'Profile Image was uploaded successfully',
-								imageSrc: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
-								requestTime: new Date().toISOString(),
-							});
-						}
-					});
-				}
+			emptyS3Directory(s3, dir).then(() => {
+				s3.upload(params, (err, data) => {
+					if (err) {
+						console.log('error in upload Task file' + err);
+					} else {
+						Manager.findByIdAndUpdate(MANAGER_ID, {
+							$set: {
+								image: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
+							},
+						}).then((UPDATED_MANAGER) => {
+							if (UPDATED_MANAGER) {
+								return res.status(200).json({
+									status: 'Success',
+									message:
+										'Profile Image was uploaded successfully',
+									imageSrc: `https://muallemy-storage.s3.eu-central-1.amazonaws.com/${dir}/${req.files.profileImage.name}`,
+									requestTime: new Date().toISOString(),
+								});
+							}
+						});
+					}
+				});
 			});
 		});
 
