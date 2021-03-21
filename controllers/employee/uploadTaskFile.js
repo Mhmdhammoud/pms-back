@@ -25,7 +25,7 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		// testing sshgit
+
 		if (TASK_ID != mongoose.Types.ObjectId(TASK_ID)) {
 			throw new Error('Wrong task ID format');
 		}
