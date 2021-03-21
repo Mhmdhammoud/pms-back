@@ -14,6 +14,7 @@ import {
 	DeleteEmployee,
 	RemoveEmployeeFromProject,
 	AddTaskFile,
+	ChangeProfilePhoto,
 } from '../controllers/projectmanagers/index.js';
 import {ManagerAuthValidator, ValidateID} from '../middleware/index.js';
 const router = express.Router();
@@ -36,4 +37,5 @@ router
 	.route('/project/employee/remove')
 	.delete(ManagerAuthValidator, RemoveEmployeeFromProject);
 router.route('/project/task/file').put(ManagerAuthValidator, AddTaskFile);
+router.route('/profile/image').put(ManagerAuthValidator, ChangeProfilePhoto);
 export default router;
