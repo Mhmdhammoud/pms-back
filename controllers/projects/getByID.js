@@ -75,7 +75,7 @@ export default async (req, res) => {
 				deadline: el.deadline,
 				startingDate: el.startingDate,
 				files: el.files,
-				_id:el._id
+				_id: el._id,
 				comments: _filteredComments,
 			});
 
