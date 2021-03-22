@@ -13,6 +13,8 @@ const connectDB = async () => {
 					useNewUrlParser: true,
 					useCreateIndex: true,
 					useFindAndModify: false,
+					connectTimeoutMS: 0,
+					socketTimeoutMS: 0,
 				});
 			});
 		} else {
