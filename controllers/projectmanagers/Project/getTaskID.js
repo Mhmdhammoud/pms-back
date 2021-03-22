@@ -27,7 +27,15 @@ export default async (req, res) => {
 				'tasks.managerComments.manager',
 				'fullName email image  _id'
 			)
-			.populate('tasks.employeeID', 'fullName image _id phone email');
+			.populate('tasks.employeeID', 'fullName image _id phone email')
+			.populate(
+				'tasks.managerFiles.manager',
+				'fullName image email phone _id'
+			)
+			.populate(
+				'tasks.employeeFiles.employee',
+				'fullName image _id phone email'
+			);
 		if (!PROJECT) {
 			return res.status(404).json({
 				status: 'Failure',
