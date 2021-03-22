@@ -77,6 +77,9 @@ export default async (req, res) => {
 				files: el.files,
 				_id: el._id,
 				comments: _filteredComments,
+				status: el.status,
+				managerFiles: el.managerFiles,
+				employeeFiles: el.employeeFiles,
 			});
 
 			_allComments = [];
