@@ -16,7 +16,15 @@ export default async (req, res) => {
 				'tasks.managerComments.manager',
 				'fullName email image  _id'
 			)
-			.populate('tasks.employeeID', 'fullName image email');
+			.populate('tasks.employeeID', 'fullName image email')
+			.populate(
+				'tasks.managerFiles.manager',
+				'fullName image email _id phone'
+			)
+			.populate(
+				'tasks.employeeID.employee',
+				'fullName image email _id phone'
+			);
 
 		if (!PROJECT) {
 			return res.status(404).json({
