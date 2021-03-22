@@ -88,6 +88,9 @@ export default async (req, res) => {
 				startingDate: TASK.startingDate,
 				files: TASK.files,
 				comments: _filteredComments,
+				managerFiles: TASK.managerFiles,
+				employeeFiles: TASK.employeeFiles,
+				status: TASK.status,
 			};
 
 			_allComments = [];
