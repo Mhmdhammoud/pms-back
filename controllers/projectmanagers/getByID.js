@@ -1,8 +1,9 @@
 import {Manager} from '../../models/index.js';
+import Logger from '../../utils/logger.js';
 export default async (req, res) => {
+	const logger = new Logger();
 	try {
 		const MANAGER_ID = req.id;
-
 		const MANAGER = await Manager.findById(MANAGER_ID)
 			.select('-__v')
 			.populate(
@@ -25,6 +26,7 @@ export default async (req, res) => {
 			});
 		}
 	} catch (error) {
+		logger.errorLog(req.originalUrl, error.message);
 		return res.status(500).json({
 			message: 'Internal Server Error',
 			error: error.message,
