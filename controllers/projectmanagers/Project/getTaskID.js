@@ -91,6 +91,7 @@ export default async (req, res) => {
 			_filteredComments.sort((a, b) => a.createdAt - b.createdAt);
 
 			let _filteredTask = {
+				_id: TASK._id,
 				title: TASK.title,
 				description: TASK.description,
 				employeeID: TASK.employeeID,
