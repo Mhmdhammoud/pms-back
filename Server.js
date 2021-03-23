@@ -12,9 +12,12 @@ import fileUpload from 'express-fileupload';
 import multer from 'multer';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-connectDB();
-
+import Logger from './utils/logger.js';
+import HTTP from 'http';
 const app = express();
+const http = HTTP.createServer(app);
+connectDB();
+const logger = new Logger();
 
 app.use(express.json());
 app.use(
@@ -42,6 +45,10 @@ app.use((req, res, next) => {
 	req.requestedAt = new Date().toISOString();
 	next();
 });
+app.use('/', (req, res, next) => {
+	logger.accessLog(req.ip);
+	next();
+});
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/manager', managersRouter);
 app.use('/api/v1/employee', userRoutes);
@@ -49,9 +56,12 @@ app.use('/api/v1/projects', generalRouter);
 app.use('/api/v1/general', generalRoutes);
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+http.listen(PORT, () => {
 	console.log(
 		`Server is running in ${process.env.NODE_ENV} port ${PORT}`.yellow.bold
 	);
+	http.on('error', (data) => {
+		logger.errorLog(data.originalUrl, data.message);
+	});
 });
 export default app;
