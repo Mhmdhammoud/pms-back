@@ -67,6 +67,7 @@ export default async (req, res) => {
 						_id: element._id,
 						text: element.text,
 						type: 'Manager',
+						createdAt: element.createdAt,
 						user: {
 							fullName: element.manager.fullName,
 							_id: element.manager._id,
@@ -78,6 +79,7 @@ export default async (req, res) => {
 						_id: element._id,
 						text: element.text,
 						type: 'Employee',
+						createdAt: element.createdAt,
 						user: {
 							fullName: element.employee.fullName,
 							_id: element.employee._id,
