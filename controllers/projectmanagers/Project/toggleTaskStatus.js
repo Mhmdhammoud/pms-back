@@ -105,6 +105,14 @@ export default async (req, res) => {
 				new: true,
 			}
 		);
+		const USELESS_PROJECT = await Project.findById(PROJECT_ID).select(
+			'-__v'
+		);
+		const {tasks: NEW_TASKS} = USELESS_PROJECT;
+		const NEW_TASK = NEW_TASKS.find(
+			(el) => el.title === UPDATED_TASK.title
+		);
+		const {_id: NEW_TASK_ID} = NEW_TASK;
 		const {tasks: ALL_UPDATED_PROJECTS_NEW} = UPDATED_PROJECT;
 		const TODO_TASKS = ALL_UPDATED_PROJECTS_NEW.filter(
 			(el) => el.status == 'TO-DO'
@@ -122,6 +130,7 @@ export default async (req, res) => {
 			todoTasks: TODO_TASKS,
 			inProgressTasks: INPROGRESS_TASKS,
 			doneTasks: DONE_TASKS,
+			newTaskID: NEW_TASK_ID,
 			requestTime: new Date().toISOString(),
 		});
 	} catch (error) {

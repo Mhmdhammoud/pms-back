@@ -102,12 +102,20 @@ export default async (req, res) => {
 						new: true,
 					}
 				);
-
+				const USELESS_PROJECT = await Project.findById(
+					PROJECT_ID
+				).select('-__v');
+				const {tasks: NEW_TASKS} = USELESS_PROJECT;
+				const NEW_TASK = NEW_TASKS.find(
+					(el) => el.title === UPDATED_TASK.title
+				);
+				const {_id: NEW_TASK_ID} = NEW_TASK;
 				if (UPDATED_PROJECT) {
 					return res.status(200).json({
 						status: 'Success',
 						message: 'Comment was added successfully',
 						project: UPDATED_PROJECT,
+						newTaskID: NEW_TASK_ID,
 						requestTime: new Date().toISOString(),
 					});
 				} else {
@@ -180,12 +188,20 @@ export default async (req, res) => {
 						new: true,
 					}
 				);
-
+				const USELESS_PROJECT = await Project.findById(
+					PROJECT_ID
+				).select('-__v');
+				const {tasks: NEW_TASKS} = USELESS_PROJECT;
+				const NEW_TASK = NEW_TASKS.find(
+					(el) => el.title === UPDATED_TASK.title
+				);
+				const {_id: NEW_TASK_ID} = NEW_TASK;
 				if (EMPLOYEE_UPDATED_PROJECT) {
 					return res.status(200).json({
 						status: 'Success',
 						message: 'Comment was added successfully',
 						project: EMPLOYEE_UPDATED_PROJECT,
+						newTaskID: NEW_TASK_ID,
 						requestTime: new Date().toISOString(),
 					});
 				} else {
