@@ -79,6 +79,7 @@ const projectSchema = mongoose.Schema(
 				},
 				deadline: {
 					type: String,
+					default: Date.now,
 				},
 				managerComments: [
 					{
@@ -108,6 +109,7 @@ const projectSchema = mongoose.Schema(
 				],
 				startingDate: {
 					type: String,
+					default: Date.now,
 				},
 				managerFiles: [
 					{
