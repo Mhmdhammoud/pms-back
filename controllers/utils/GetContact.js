@@ -10,7 +10,7 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		} else {
-			return res.stauts(200).json({
+			return res.status(200).json({
 				status: 'Success',
 				message: 'Contact form were retrieved successfully',
 				contactForms: ALL_CONTACTS,
