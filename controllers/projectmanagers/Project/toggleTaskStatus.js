@@ -81,6 +81,8 @@ export default async (req, res) => {
 			description: TASK.description,
 			comments: TASK.comments,
 			status: NEW_STATUS,
+			managerFiles: TASK.managerFiles,
+			employeeFiles: TASK.employeeFiles,
 		};
 		ALL_OTHER_TASKS.push(UPDATED_TASK);
 		let ALL_UPDATED_TASKS = ALL_OTHER_TASKS;
