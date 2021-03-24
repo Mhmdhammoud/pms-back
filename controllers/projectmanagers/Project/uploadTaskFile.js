@@ -123,11 +123,20 @@ export default async (req, res) => {
 			.populate('tasks.employeesComments', 'fullName image _id email')
 			.populate('tasks.employeeFiles', 'fullName image _id email')
 			.populate('tasks.managerFiles', 'fullName image _id email');
+		const USELESS_PROJECT = await Project.findById(PROJECT_ID).select(
+			'-__v'
+		);
+		const {tasks: USELESS_TASKS} = USELESS_PROJECT;
+		const USELESS_TASK = USELESS_TASKS.find(
+			(el) => el.title === updatedTask.title
+		);
+		const {_id: NEW_TASK_ID} = USELESS_TASK;
 
 		return res.status(200).json({
 			status: 'Success',
 			message: 'Task file was uploaded successfully',
 			project: UPDATED_PROJECT,
+			newTaskID: NEW_TASK_ID,
 		});
 	} catch (error) {
 		return res.status(500).json({
