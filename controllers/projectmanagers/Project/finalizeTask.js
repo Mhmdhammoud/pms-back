@@ -11,7 +11,6 @@ export default async (req, res) => {
 				requestTime: new Date().toISOString(),
 			});
 		}
-		console.log(req.user);
 		if (USER_TYPE != 'Manager') {
 			return res.status(403).json({
 				status: 'Failure',
